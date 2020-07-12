@@ -18,8 +18,13 @@ export default class EtcModule extends Module {
 	@listener({ event: "ready" })
 	presence() {
 		this.client.user?.setPresence({
-			activity: { name: owofy("with you!") },
+			activity: { name: `${owofy("with you!")} | owo help` },
 		});
+	}
+
+	@listener({ event: "ready" })
+	presenceRefresh() {
+		setInterval(() => this.presence(), 1000 * 60 * 2);
 	}
 
 	@command()
@@ -51,16 +56,16 @@ export default class EtcModule extends Module {
 				);
 			await msg.channel.send(
 				"```js\n" +
-					result.split(this.client.token).join("[TOKEN]") +
-					"\n```"
+				result.split(this.client.token).join("[TOKEN]") +
+				"\n```"
 			);
 		} catch (error) {
 			msg.reply(
 				"error! " +
-					(error || "")
-						.toString()
-						.split(this.client.token)
-						.join("[TOKEN]")
+				(error || "")
+					.toString()
+					.split(this.client.token)
+					.join("[TOKEN]")
 			);
 		}
 	}

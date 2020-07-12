@@ -12,6 +12,7 @@ import {
 	Message,
 	User,
 	MessageEmbed,
+	Guild,
 } from "discord.js";
 import { OwoGuildModel } from "../db/owoGuild";
 import owofy from "owofy";
@@ -29,6 +30,20 @@ export default class OwoModule extends Module {
 			owoifedChannelIDs: [],
 			owoifedMemberIDs: [],
 		});
+	}
+
+	@listener({ event: "guildCreate" })
+	async onAdd(guild: Guild) {
+		await OwoGuildModel.findByIdAndDelete(guild.id);
+		await OwoGuildModel.create({
+			_id: guild.id,
+			owoifedChannelIDs: [],
+			owoifedMemberIDs: [],
+		});
+	}
+	@listener({ event: "guildDelete" })
+	async onRemove(guild: Guild) {
+		await OwoGuildModel.findByIdAndDelete(guild.id);
 	}
 
 	@command({
@@ -51,7 +66,7 @@ export default class OwoModule extends Module {
 		}
 		await OwoGuildModel.findByIdAndUpdate(gd._id, gd);
 		msg.channel.send(
-			`${isOwoified ? "un" : ""}owoified ${member.user.tag}`
+			`${isOwoified ? "de" : ""}owoified ${member.user.tag}`
 		);
 	}
 	@command({
@@ -64,7 +79,7 @@ export default class OwoModule extends Module {
 		if (!gd) throw new Error("OwoGuildData missing");
 		const embed = new MessageEmbed({
 			title: "all the furries",
-			description: gd.owoifedMemberIDs.map((x) => `<@${x}>`).join("\n"),
+			description: gd.owoifedMemberIDs.map(x => `<@${x}>`).join("\n"),
 			color: 0xffffff,
 		});
 		await msg.channel.send({ embed });
@@ -72,7 +87,7 @@ export default class OwoModule extends Module {
 
 	async ensureWebhook(chan: TextChannel) {
 		const hooks = await chan.fetchWebhooks();
-		const myHooks = hooks.filter((hook) => hook.owner instanceof User);
+		const myHooks = hooks.filter(hook => hook.owner instanceof User);
 		const first = myHooks.first();
 		if (first) return first;
 		else {
@@ -104,9 +119,6 @@ export default class OwoModule extends Module {
 			avatarURL: msg.author.displayAvatarURL({
 				size: 256,
 			}),
-			files: Array.from(msg.attachments.values()).map(
-				(x) => x.attachment
-			),
 		});
 	}
 }
