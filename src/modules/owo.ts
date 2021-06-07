@@ -75,21 +75,6 @@ export default class OwoModule extends Module {
 			`${isOwoified ? "de" : ""}owoified ${member.user.tag}`
 		);
 	}
-	@command({
-		description: "list the owoers",
-		inhibitors: [CommonInhibitors.hasGuildPermission("MANAGE_MESSAGES")],
-	})
-	async list(msg: Message) {
-		if (!msg.member || !msg.guild) return;
-		let gd = await OwoGuildModel.findById(msg.guild.id).exec();
-		if (!gd) throw new Error("OwoGuildData missing");
-		const embed = new MessageEmbed({
-			title: "all the furries",
-			description: gd.owoifedMemberIDs.map(x => `<@${x}>`).join("\n"),
-			color: 0xffffff,
-		});
-		await msg.channel.send({ embed });
-	}
 
 	async ensureWebhook(chan: TextChannel) {
 		const hooks = await chan.fetchWebhooks();
