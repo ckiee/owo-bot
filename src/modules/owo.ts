@@ -21,15 +21,21 @@ export default class OwoModule extends Module {
 	constructor(client: CookiecordClient) {
 		super(client);
 	}
-	@listener({ event: "commandExecution" })
-	async onExec({ msg }: Context) {
+
+	hasGuildData: string[] = [];
+	@listener({ event: "message" })
+	async ensureGuildData({ msg }: Context) {
 		if (!msg.guild) return;
-		if (await OwoGuildModel.findById(msg.guild.id)) return;
-		await OwoGuildModel.create({
-			_id: msg.guild.id,
-			owoifedChannelIDs: [],
-			owoifedMemberIDs: [],
-		});
+		if (!this.hasGuildData.includes(msg.guild.id)) return;
+
+		if (!(await OwoGuildModel.findById(msg.guild.id))) {
+			await OwoGuildModel.create({
+				_id: msg.guild.id,
+				owoifedChannelIDs: [],
+				owoifedMemberIDs: [],
+			});
+		}
+		this.hasGuildData.push(msg.guild.id);
 	}
 
 	@listener({ event: "guildCreate" })
