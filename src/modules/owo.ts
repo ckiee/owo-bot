@@ -24,7 +24,7 @@ export default class OwoModule extends Module {
 
 	hasGuildData: string[] = [];
 	@listener({ event: "message" })
-	async ensureGuildData({ msg }: Context) {
+	async ensureGuildData(msg: Message) {
 		if (!msg.guild) return;
 		if (!this.hasGuildData.includes(msg.guild.id)) return;
 
