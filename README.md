@@ -10,7 +10,7 @@ owo-bot owoifies aww youw Discowd messages using a webhook.
 You can [invite the bot](https://u.ronthecookie.me/owobot) ow fowwow the nyowmaw Nyode.js wowkfwow fow devewopment.
 
 ## License
-Copywight (C) 2021 Ron B
+Copywight (C) 2021 ckie
 
 This pwogwam is fwee softwawe: you can wedistwibute it and/ow modify
 it undew the tewms of the GNyU Genyewaw Pubwic Wicense as pubwished by
