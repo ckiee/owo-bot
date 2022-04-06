@@ -34,7 +34,7 @@ export default class EtcModule extends Module {
 	@command()
 	invite(msg: Message) {
 		msg.channel.send(
-			`${owofy("invite me! ")} <https://u.ckie.dev/owobot>`
+			`${owofy("invite me! ")} <https://ckie.dev/owobot>`
 		);
 	}
 
