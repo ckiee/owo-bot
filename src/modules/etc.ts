@@ -34,7 +34,7 @@ export default class EtcModule extends Module {
 	@command()
 	invite(msg: Message) {
 		msg.channel.send(
-			`${owofy("invite me! ")} <https://u.ronthecookie.me/owobot>`
+			`${owofy("invite me! ")} <https://u.ckie.dev/owobot>`
 		);
 	}
 
@@ -44,7 +44,6 @@ export default class EtcModule extends Module {
 	})
 	async eval(msg: Message, js: string) {
 		OwoGuildModel; // for nice eval ctx
-		if (msg.author.id !== "142244934139904000") throw new Error("not ron");
 		console.log("EVAL", js);
 		try {
 			let result = eval(js);

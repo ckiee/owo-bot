@@ -7,7 +7,7 @@ owo-bot owoifies aww youw Discowd messages using a webhook.
 
 ## Usage
 
-You can [invite the bot](https://u.ronthecookie.me/owobot) ow fowwow the nyowmaw Nyode.js wowkfwow fow devewopment.
+You can [invite the bot](https://u.ckie.dev/owobot) ow fowwow the nyowmaw Nyode.js wowkfwow fow devewopment.
 
 ## License
 Copywight (C) 2021 ckie
