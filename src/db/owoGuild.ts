@@ -9,6 +9,9 @@ export class OwoGuild {
 
 	@prop({ required: true, default: [] })
 	public owoifedMemberIDs!: string[];
+
+	@prop({ required: true, default: false })
+	public selfChoice!: boolean;
 }
 
 export const OwoGuildModel = getModelForClass(OwoGuild);

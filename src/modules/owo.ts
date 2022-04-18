@@ -33,6 +33,7 @@ export default class OwoModule extends Module {
 				_id: msg.guild.id,
 				owoifedChannelIDs: [],
 				owoifedMemberIDs: [],
+				selfChoice: false
 			});
 		}
 		this.hasGuildData.push(msg.guild.id);
@@ -45,6 +46,7 @@ export default class OwoModule extends Module {
 			_id: guild.id,
 			owoifedChannelIDs: [],
 			owoifedMemberIDs: [],
+			selfChoice: false
 		});
 	}
 	@listener({ event: "guildDelete" })
@@ -53,14 +55,17 @@ export default class OwoModule extends Module {
 	}
 
 	@command({
-		description: "make them owo",
-		aliases: ["her", "him", "them"],
-		inhibitors: [CommonInhibitors.hasGuildPermission("MANAGE_MESSAGES")],
+		description: "make them owo"
 	})
 	async member(msg: Message, member: GuildMember) {
 		if (!msg.member || !msg.guild) return;
 		let gd = await OwoGuildModel.findById(msg.guild.id).exec();
 		if (!gd) throw new Error("OwoGuildData missing");
+		if (!gd.selfChoice && !member.hasPermission("MANAGE_MESSAGES")) {
+			await msg.channel.send(":warning: no permission and self choice is not enabled on this server.");
+			return;
+		}
+		if (member.user.bot) throw new Error("not bots lol");
 		const isOwoified = gd?.owoifedMemberIDs.includes(member.id);
 		if (isOwoified) {
 			gd.owoifedMemberIDs.splice(
@@ -73,6 +78,21 @@ export default class OwoModule extends Module {
 		await OwoGuildModel.findByIdAndUpdate(gd._id, gd);
 		msg.channel.send(
 			`${isOwoified ? "de" : ""}owoified ${member.user.tag}`
+		);
+	}
+
+
+	@command({
+		description: "toggle selfchoice",
+		inhibitors: [CommonInhibitors.hasGuildPermission("ADMINISTRATOR")]
+	})
+	async selfchoice(msg: Message) {
+		if (!msg.member || !msg.guild) return;
+		let gd = await OwoGuildModel.findById(msg.guild.id).exec();
+		if (!gd) throw new Error("OwoGuildData missing");
+		gd.selfChoice = !gd.selfChoice;
+		msg.channel.send(
+			`selfChoice = \`${gd.selfChoice}\``
 		);
 	}
 
