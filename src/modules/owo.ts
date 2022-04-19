@@ -61,7 +61,7 @@ export default class OwoModule extends Module {
 		if (!msg.member || !msg.guild) return;
 		let gd = await OwoGuildModel.findById(msg.guild.id).exec();
 		if (!gd) throw new Error("OwoGuildData missing");
-		if (!(member.hasPermission("MANAGE_MESSAGES") || (msg.member.id == member.id && gd.selfChoice))) {
+		if (!(msg.member.hasPermission("MANAGE_MESSAGES") || (msg.member.id == member.id && gd.selfChoice))) {
 			await msg.channel.send(":warning: no permission");
 			return;
 		}
