@@ -61,12 +61,13 @@ export default class OwoModule extends Module {
 		if (!msg.member || !msg.guild) return;
 		let gd = await OwoGuildModel.findById(msg.guild.id).exec();
 		if (!gd) throw new Error("OwoGuildData missing");
-		if (member.hasPermission("MANAGE_MESSAGES") || (msg.member.id == member.id && gd.selfChoice)) {
+		if (!(member.hasPermission("MANAGE_MESSAGES") || (msg.member.id == member.id && gd.selfChoice))) {
 			await msg.channel.send(":warning: no permission");
 			return;
 		}
 		if (member.user.bot) throw new Error("not bots lol");
-		const isOwoified = gd?.owoifedMemberIDs.includes(member.id);
+
+		const isOwoified = gd?.owoifedMemberIDs.includes(member.id)
 		if (isOwoified) {
 			gd.owoifedMemberIDs.splice(
 				gd.owoifedMemberIDs.indexOf(member.id),
@@ -75,12 +76,12 @@ export default class OwoModule extends Module {
 		} else {
 			gd?.owoifedMemberIDs.push(member.id);
 		}
+
 		await OwoGuildModel.findByIdAndUpdate(gd._id, gd);
 		msg.channel.send(
 			`${isOwoified ? "de" : ""}owoified ${member.user.tag}`
 		);
 	}
-
 
 	@command({
 		description: "toggle selfchoice",
@@ -123,7 +124,7 @@ export default class OwoModule extends Module {
 
 		msg.delete({ reason: "to owofy" });
 		const hook = await this.ensureWebhook(msg.channel);
-		hook.send(owofy(msg.content.replace(/<@!(\d+)>/g, "<@$1>")), {
+		hook.send(owofy(msg.content.replace(/<@!(\d+)>/g, "<@$1>").replace(/<@&\d+>/g, "<>")), {
 			tts: msg.tts,
 			disableMentions: "everyone",
 			username: msg.member?.displayName,
