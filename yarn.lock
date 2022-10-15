@@ -390,11 +390,6 @@ normalize-path@^3.0.0, normalize-path@~3.0.0:
   resolved "https://registry.yarnpkg.com/normalize-path/-/normalize-path-3.0.0.tgz#0dcd69ff23a1c9b11fd0978316644a0388216a65"
   integrity sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==
 
-owofy@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/owofy/-/owofy-1.0.0.tgz#47559f8c123a24b6afcbd8cb1660bfb1bfccce74"
-  integrity sha512-G33OD858I7PrboBC1+XMkk4ULVePgFgyiNoRNpzqhbI0JCOARDqn3i9kzXO0988bkR6Z/7hzzt35Zr2pptX6cw==
-
 picomatch@^2.0.4, picomatch@^2.2.1:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.2.2.tgz#21f333e9b6b8eaff02468f5146ea406d345f4dad"

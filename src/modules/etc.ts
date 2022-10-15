@@ -7,7 +7,7 @@ import {
 	listener,
 } from "cookiecord";
 import { inspect } from "util";
-import owofy from "owofy";
+import owofy from "../owofy";
 import { OwoGuildModel } from "../db/owoGuild";
 
 export default class EtcModule extends Module {

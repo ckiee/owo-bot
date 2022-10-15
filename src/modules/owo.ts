@@ -15,7 +15,7 @@ import {
 	Guild,
 } from "discord.js";
 import { OwoGuildModel } from "../db/owoGuild";
-import owofy from "owofy";
+import owofy from "../owofy";
 
 export default class OwoModule extends Module {
 	constructor(client: CookiecordClient) {
